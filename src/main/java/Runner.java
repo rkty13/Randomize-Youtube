@@ -5,14 +5,16 @@ import org.eclipse.jetty.server.Server;
 import org.eclipse.jetty.servlet.*;
 
 public class Runner extends HttpServlet {
-    @Override
+
+	private static final long serialVersionUID = 1L;
+	@Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp)
             throws ServletException, IOException {
         resp.getWriter().print("Hello from Java!\n");
-        new Search(req, resp);
+        new Search(resp);
     }
     public static void main(String[] args) throws Exception{
-        Server server = new Server(5000);
+        Server server = new Server(Integer.valueOf(System.getenv("PORT")));
         ServletContextHandler context = new ServletContextHandler(ServletContextHandler.SESSIONS);
         context.setContextPath("/");
         server.setHandler(context);

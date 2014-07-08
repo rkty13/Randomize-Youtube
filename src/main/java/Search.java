@@ -5,7 +5,6 @@ import java.util.List;
 import java.util.Properties;
 import java.util.Random;
 
-import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.google.api.client.googleapis.json.GoogleJsonResponseException;
@@ -26,12 +25,10 @@ public class Search {
 	private YouTube youtube;
 	private Properties properties;
 	
-	private HttpServletRequest req;
 	private HttpServletResponse resp;
 
-	public Search(HttpServletRequest req, HttpServletResponse resp) {
+	public Search(HttpServletResponse resp) {
 		properties = new Properties();
-		this.req = req;
 		this.resp = resp;
 		try {
 			InputStream in = Search.class.getResourceAsStream("/"

@@ -16,7 +16,7 @@ import com.google.api.services.youtube.model.SearchListResponse;
 import com.google.api.services.youtube.model.SearchResult;
 import com.google.api.services.youtube.model.Thumbnail;
 
-public class Search {
+class Search {
 
 	private static final String PROPERTIES_FILENAME = "youtube.properties";
 	private static final long NUMBER_OF_VIDEOS_RETURNED = 25;
@@ -94,8 +94,6 @@ public class Search {
             SearchResult singleVideo = iteratorSearchResults.next();
             ResourceId rId = singleVideo.getId();
 
-            // Confirm that the result represents a video. Otherwise, the
-            // item will not contain a video ID.
             if (rId.getKind().equals("youtube#video")) {
                 Thumbnail thumbnail = singleVideo.getSnippet().getThumbnails().getDefault();
 

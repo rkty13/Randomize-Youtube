@@ -17,7 +17,7 @@
         <dependency>
             <groupId>org.eclipse.jetty</groupId>
             <artifactId>jetty-servlet</artifactId>
-            <version>7.6.0.v20120127</version>
+            <version>9.1.1.v20140108</version>
         </dependency>
         <dependency>
             <groupId>javax.servlet</groupId>

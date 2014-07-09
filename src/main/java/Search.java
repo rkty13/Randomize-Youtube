@@ -5,8 +5,6 @@ import java.util.List;
 import java.util.Properties;
 import java.util.Random;
 
-import javax.servlet.http.HttpServletResponse;
-
 import com.google.api.client.googleapis.json.GoogleJsonResponseException;
 import com.google.api.client.http.HttpRequest;
 import com.google.api.client.http.HttpRequestInitializer;

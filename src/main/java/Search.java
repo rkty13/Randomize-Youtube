@@ -16,8 +16,12 @@ import com.google.api.services.youtube.model.SearchListResponse;
 import com.google.api.services.youtube.model.SearchResult;
 import com.google.api.services.youtube.model.Thumbnail;
 
-class Search {
+public class Search extends Runner {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private static final String PROPERTIES_FILENAME = "youtube.properties";
 	private static final long NUMBER_OF_VIDEOS_RETURNED = 25;
 	private static final int queryLength = 5;

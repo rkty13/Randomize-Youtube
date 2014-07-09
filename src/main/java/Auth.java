@@ -23,7 +23,7 @@ import java.util.List;
  * Shared class used by every sample. Contains methods for authorizing a user and caching credentials.
  */
 
-class Auth {
+public class Auth {
 
     /**
      * Define a global instance of the HTTP transport.

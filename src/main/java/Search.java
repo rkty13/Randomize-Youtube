@@ -29,8 +29,8 @@ public class Search {
 	public Search() {
 		properties = new Properties();
 		try {
-			InputStream in = Search.class.getResourceAsStream("/"
-					+ PROPERTIES_FILENAME);
+			InputStream in = Search.class
+					.getResourceAsStream(PROPERTIES_FILENAME);
 			properties.load(in);
 		} catch (IOException e) {
 			System.err.println("Error: error reading " + PROPERTIES_FILENAME

@@ -21,9 +21,9 @@ public class Search {
 	/**
 	 * 
 	 */
-	private static final String PROPERTIES_FILENAME = "youtube.properties";
-	private static final long NUMBER_OF_VIDEOS_RETURNED = 25;
-	private static final int queryLength = 5;
+	private final String PROPERTIES_FILENAME = "youtube.properties";
+	private final long NUMBER_OF_VIDEOS_RETURNED = 25;
+	private final int queryLength = 5;
 
 	private YouTube youtube;
 	private Properties properties;
@@ -38,22 +38,9 @@ public class Search {
 			System.err.println("Error: error reading " + PROPERTIES_FILENAME
 					+ ": " + e.getMessage());
 		}
-
-		try {
-			FindRandom();
-		} catch (GoogleJsonResponseException e) {
-			System.err.println("There was a service error: "
-					+ e.getDetails().getCode() + " : "
-					+ e.getDetails().getMessage());
-		} catch (IOException e) {
-			System.err.println("There was an IO error: " + e.getCause() + " : "
-					+ e.getMessage());
-		} catch (Throwable t) {
-			t.printStackTrace();
-		}
 	}
 
-	private void FindRandom() throws GoogleJsonResponseException, IOException,
+	public void FindRandom() throws GoogleJsonResponseException, IOException,
 			Throwable {
 		youtube = new YouTube.Builder(Auth.HTTP_TRANSPORT, Auth.JSON_FACTORY,
 				new HttpRequestInitializer() {

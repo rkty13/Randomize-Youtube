@@ -16,24 +16,20 @@ import com.google.api.services.youtube.model.SearchListResponse;
 import com.google.api.services.youtube.model.SearchResult;
 import com.google.api.services.youtube.model.Thumbnail;
 
-public class Search extends Runner {
+public class Search {
 
 	/**
 	 * 
 	 */
-	private static final long serialVersionUID = 1L;
 	private static final String PROPERTIES_FILENAME = "youtube.properties";
 	private static final long NUMBER_OF_VIDEOS_RETURNED = 25;
 	private static final int queryLength = 5;
 
 	private YouTube youtube;
 	private Properties properties;
-	
-	private HttpServletResponse resp;
 
-	public Search(HttpServletResponse resp) {
+	public Search() {
 		properties = new Properties();
-		this.resp = resp;
 		try {
 			InputStream in = Search.class.getResourceAsStream("/"
 					+ PROPERTIES_FILENAME);
@@ -57,64 +53,73 @@ public class Search extends Runner {
 		}
 	}
 
-	private void FindRandom() throws GoogleJsonResponseException, IOException, Throwable {
-		youtube = new YouTube.Builder(Auth.HTTP_TRANSPORT, Auth.JSON_FACTORY, new HttpRequestInitializer() {
-			public void initialize(HttpRequest request) throws IOException {
-			}
-		}).setApplicationName("search-random").build();
-		
+	private void FindRandom() throws GoogleJsonResponseException, IOException,
+			Throwable {
+		youtube = new YouTube.Builder(Auth.HTTP_TRANSPORT, Auth.JSON_FACTORY,
+				new HttpRequestInitializer() {
+					public void initialize(HttpRequest request)
+							throws IOException {
+					}
+				}).setApplicationName("search-random").build();
+
 		String queryTerm = getRandomQuery();
-		
+
 		YouTube.Search.List search = youtube.search().list("id, snippet");
-		
+
 		String apiKey = properties.getProperty("youtube.apikey");
 		search.setKey(apiKey);
 		search.setQ(queryTerm);
-		
+
 		search.setType("video");
-		
-        search.setFields("items(id/kind,id/videoId,snippet/title,snippet/thumbnails/default/url)");
-        search.setMaxResults(NUMBER_OF_VIDEOS_RETURNED);
-        SearchListResponse searchResponse = search.execute();
-        List<SearchResult> searchResultList = searchResponse.getItems();
-        if (searchResultList != null) {
-            prettyPrint(searchResultList.iterator(), queryTerm);
-        }
+
+		search.setFields("items(id/kind,id/videoId,snippet/title,snippet/thumbnails/default/url)");
+		search.setMaxResults(NUMBER_OF_VIDEOS_RETURNED);
+		SearchListResponse searchResponse = search.execute();
+		List<SearchResult> searchResultList = searchResponse.getItems();
+		if (searchResultList != null) {
+			prettyPrint(searchResultList.iterator(), queryTerm);
+		}
 	}
-	
-	private void prettyPrint(Iterator<SearchResult> iteratorSearchResults, String query) throws IOException {
 
-		resp.getWriter().println("\n=============================================================");
-		resp.getWriter().println(
-                "   First " + NUMBER_OF_VIDEOS_RETURNED + " videos for search on \"" + query + "\".");
-		resp.getWriter().println("=============================================================\n");
+	private void prettyPrint(Iterator<SearchResult> iteratorSearchResults,
+			String query) throws IOException {
 
-        if (!iteratorSearchResults.hasNext()) {
-        	resp.getWriter().println(" There aren't any results for your query.");
-        }
+		System.out
+				.println("\n=============================================================");
+		System.out.println("   First " + NUMBER_OF_VIDEOS_RETURNED
+				+ " videos for search on \"" + query + "\".");
+		System.out
+				.println("=============================================================\n");
 
-        while (iteratorSearchResults.hasNext()) {
+		if (!iteratorSearchResults.hasNext()) {
+			System.out.println(" There aren't any results for your query.");
+		}
 
-            SearchResult singleVideo = iteratorSearchResults.next();
-            ResourceId rId = singleVideo.getId();
+		while (iteratorSearchResults.hasNext()) {
 
-            if (rId.getKind().equals("youtube#video")) {
-                Thumbnail thumbnail = singleVideo.getSnippet().getThumbnails().getDefault();
+			SearchResult singleVideo = iteratorSearchResults.next();
+			ResourceId rId = singleVideo.getId();
 
-                resp.getWriter().println(" Video Id: " + rId.getVideoId());
-                resp.getWriter().println(" Title: " + singleVideo.getSnippet().getTitle());
-                resp.getWriter().println(" Thumbnail: " + thumbnail.getUrl());
-                resp.getWriter().println("\n-------------------------------------------------------------\n");
-            }
-        }
-    }
-	
+			if (rId.getKind().equals("youtube#video")) {
+				Thumbnail thumbnail = singleVideo.getSnippet().getThumbnails()
+						.getDefault();
+
+				System.out.println(" Video Id: " + rId.getVideoId());
+				System.out.println(" Title: "
+						+ singleVideo.getSnippet().getTitle());
+				System.out.println(" Thumbnail: " + thumbnail.getUrl());
+				System.out
+						.println("\n-------------------------------------------------------------\n");
+			}
+		}
+	}
+
 	private String getRandomQuery() {
 		String query = "v=";
-    	Random rand = new Random();
-    	for (int i = 0; i < queryLength; i++) {
-    		query += (char) (rand.nextInt(93) + 33);
-    	}
-    	return query;
+		Random rand = new Random();
+		for (int i = 0; i < queryLength; i++) {
+			query += (char) (rand.nextInt(93) + 33);
+		}
+		return query;
 	}
 }

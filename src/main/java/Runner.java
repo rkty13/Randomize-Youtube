@@ -16,8 +16,8 @@ public class Runner extends HttpServlet {
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp)
 			throws ServletException, IOException {
-		resp.getWriter().println("Hello from Java!\n");
-		Search search = new Search(resp);
+		resp.getWriter().println("Made by Robert Kim!\n");
+		new Search(resp);
 	}
 
 	public static void main(String[] args) throws Exception {

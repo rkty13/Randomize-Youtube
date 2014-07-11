@@ -4,6 +4,8 @@ import java.util.List;
 import java.util.Properties;
 import java.util.Random;
 
+import javax.servlet.http.HttpServletResponse;
+
 import com.google.api.client.googleapis.json.GoogleJsonResponseException;
 import com.google.api.client.http.HttpRequest;
 import com.google.api.client.http.HttpRequestInitializer;
@@ -25,19 +27,17 @@ public class Search {
 	private YouTube youtube;
 	private Properties properties;
 
-	public Search() {
+	private HttpServletResponse resp;
+
+	public Search(HttpServletResponse resp) {
 		/*
-		properties = new Properties();
-		try {
-			InputStream in = Search.class
-					.getResourceAsStream(PROPERTIES_FILENAME);
-			properties.load(in);
-		} catch (IOException e) {
-			System.err.println("Error: error reading " + PROPERTIES_FILENAME
-					+ ": " + e.getMessage());
-		}
-		*/
-		
+		 * properties = new Properties(); try { InputStream in = Search.class
+		 * .getResourceAsStream(PROPERTIES_FILENAME); properties.load(in); }
+		 * catch (IOException e) { System.err.println("Error: error reading " +
+		 * PROPERTIES_FILENAME + ": " + e.getMessage()); }
+		 */
+		this.resp = resp;
+
 		try {
 			FindRandom();
 		} catch (GoogleJsonResponseException e) {
@@ -83,15 +83,19 @@ public class Search {
 	private void prettyPrint(Iterator<SearchResult> iteratorSearchResults,
 			String query) throws IOException {
 
-		System.out
-				.println("\n=============================================================");
-		System.out.println("   First " + NUMBER_OF_VIDEOS_RETURNED
-				+ " videos for search on \"" + query + "\".");
-		System.out
-				.println("=============================================================\n");
+		resp.getWriter()
+				.println(
+						"\n=============================================================");
+		resp.getWriter().println(
+				"   First " + NUMBER_OF_VIDEOS_RETURNED
+						+ " videos for search on \"" + query + "\".");
+		resp.getWriter()
+				.println(
+						"=============================================================\n");
 
 		if (!iteratorSearchResults.hasNext()) {
-			System.out.println(" There aren't any results for your query.");
+			resp.getWriter().println(
+					" There aren't any results for your query.");
 		}
 
 		while (iteratorSearchResults.hasNext()) {
@@ -103,12 +107,13 @@ public class Search {
 				Thumbnail thumbnail = singleVideo.getSnippet().getThumbnails()
 						.getDefault();
 
-				System.out.println(" Video Id: " + rId.getVideoId());
-				System.out.println(" Title: "
-						+ singleVideo.getSnippet().getTitle());
-				System.out.println(" Thumbnail: " + thumbnail.getUrl());
-				System.out
-						.println("\n-------------------------------------------------------------\n");
+				resp.getWriter().println(" Video Id: " + rId.getVideoId());
+				resp.getWriter().println(
+						" Title: " + singleVideo.getSnippet().getTitle());
+				resp.getWriter().println(" Thumbnail: " + thumbnail.getUrl());
+				resp.getWriter()
+						.println(
+								"\n-------------------------------------------------------------\n");
 			}
 		}
 	}

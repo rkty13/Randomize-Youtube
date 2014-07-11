@@ -85,7 +85,7 @@ public class Search {
 			String query) throws IOException {
 
 		resp.getWriter().println("\n=======================");
-		resp.getWriter().println("   RANDOM YOUTUBE VIDEO:");
+		resp.getWriter().println("RANDOM YOUTUBE VIDEO:");
 		resp.getWriter().println("=======================\n");
 
 		if (!iteratorSearchResults.hasNext()) {
@@ -108,7 +108,8 @@ public class Search {
 
 				info = "";
 
-				info += " Video Id: " + rId.getVideoId() + "\n";
+				info += " Video Id: " + "https://www.youtube.com/watch?v="
+						+ rId.getVideoId() + "\n";
 				info += " Title: " + singleVideo.getSnippet().getTitle() + "\n";
 				info += " Thumbnail: " + thumbnail.getUrl() + "\n";
 

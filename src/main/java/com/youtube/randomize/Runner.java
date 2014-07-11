@@ -19,6 +19,7 @@ public class Runner extends HttpServlet {
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp)
 			throws ServletException, IOException {
 		resp.getWriter().println("Made by Robert Kim!\n");
+		resp.getWriter().println("Version 1.0.0\n");
 		new Search(resp);
 	}
 

@@ -1,4 +1,5 @@
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Properties;
@@ -83,20 +84,18 @@ public class Search {
 	private void prettyPrint(Iterator<SearchResult> iteratorSearchResults,
 			String query) throws IOException {
 
-		resp.getWriter()
-				.println(
-						"\n=============================================================");
-		resp.getWriter().println(
-				"   First " + NUMBER_OF_VIDEOS_RETURNED
-						+ " videos for search on \"" + query + "\".");
-		resp.getWriter()
-				.println(
-						"=============================================================\n");
+		resp.getWriter().println("\n=======================");
+		resp.getWriter().println("   RANDOM YOUTUBE VIDEO:");
+		resp.getWriter().println("=======================\n");
 
 		if (!iteratorSearchResults.hasNext()) {
 			resp.getWriter().println(
 					" There aren't any results for your query.");
 		}
+
+		int count = 0;
+		String info = null;
+		ArrayList<String> videosInfo = new ArrayList<String>();
 
 		while (iteratorSearchResults.hasNext()) {
 
@@ -107,15 +106,20 @@ public class Search {
 				Thumbnail thumbnail = singleVideo.getSnippet().getThumbnails()
 						.getDefault();
 
-				resp.getWriter().println(" Video Id: " + rId.getVideoId());
-				resp.getWriter().println(
-						" Title: " + singleVideo.getSnippet().getTitle());
-				resp.getWriter().println(" Thumbnail: " + thumbnail.getUrl());
-				resp.getWriter()
-						.println(
-								"\n-------------------------------------------------------------\n");
+				info = "";
+
+				info += " Video Id: " + rId.getVideoId() + "\n";
+				info += " Title: " + singleVideo.getSnippet().getTitle() + "\n";
+				info += " Thumbnail: " + thumbnail.getUrl() + "\n";
+
+				videosInfo.add(info);
+
+				count++;
 			}
 		}
+
+		Random chooseVideo = new Random();
+		resp.getWriter().println(videosInfo.get(chooseVideo.nextInt(count)));
 	}
 
 	private String getRandomQuery() {

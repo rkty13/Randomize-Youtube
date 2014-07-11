@@ -1,5 +1,4 @@
 import java.io.IOException;
-import java.io.InputStream;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Properties;
@@ -37,6 +36,7 @@ public class Search {
 			System.err.println("Error: error reading " + PROPERTIES_FILENAME
 					+ ": " + e.getMessage());
 		}
+		*/
 		
 		try {
 			FindRandom();
@@ -50,7 +50,6 @@ public class Search {
 		} catch (Throwable t) {
 			t.printStackTrace();
 		}
-		*/
 	}
 
 	public void FindRandom() throws GoogleJsonResponseException, IOException,
@@ -66,7 +65,7 @@ public class Search {
 
 		YouTube.Search.List search = youtube.search().list("id, snippet");
 
-		String apiKey = properties.getProperty("youtube.apikey");
+		String apiKey = "AIzaSyBXVoLvqBOr_DZtfu9hPcbqh1IqsfIM71Y";
 		search.setKey(apiKey);
 		search.setQ(queryTerm);
 

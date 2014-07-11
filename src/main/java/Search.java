@@ -27,6 +27,7 @@ public class Search {
 	private Properties properties;
 
 	public Search() {
+		/*
 		properties = new Properties();
 		try {
 			InputStream in = Search.class
@@ -36,7 +37,7 @@ public class Search {
 			System.err.println("Error: error reading " + PROPERTIES_FILENAME
 					+ ": " + e.getMessage());
 		}
-		/*
+		
 		try {
 			FindRandom();
 		} catch (GoogleJsonResponseException e) {

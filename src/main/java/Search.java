@@ -1,4 +1,5 @@
 import java.io.IOException;
+import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
@@ -31,12 +32,17 @@ public class Search {
 	private HttpServletResponse resp;
 
 	public Search(HttpServletResponse resp) {
-		/*
-		 * properties = new Properties(); try { InputStream in = Search.class
-		 * .getResourceAsStream(PROPERTIES_FILENAME); properties.load(in); }
-		 * catch (IOException e) { System.err.println("Error: error reading " +
-		 * PROPERTIES_FILENAME + ": " + e.getMessage()); }
-		 */
+
+		properties = new Properties();
+		try {
+			InputStream in = Search.class
+					.getResourceAsStream(PROPERTIES_FILENAME);
+			properties.load(in);
+		} catch (IOException e) {
+			System.err.println("Error: error reading " + PROPERTIES_FILENAME
+					+ ": " + e.getMessage());
+		}
+
 		this.resp = resp;
 
 		try {
@@ -66,7 +72,7 @@ public class Search {
 
 		YouTube.Search.List search = youtube.search().list("id, snippet");
 
-		String apiKey = "AIzaSyBXVoLvqBOr_DZtfu9hPcbqh1IqsfIM71Y";
+		String apiKey = properties.getProperty("youtube.apikey");
 		search.setKey(apiKey);
 		search.setQ(queryTerm);
 

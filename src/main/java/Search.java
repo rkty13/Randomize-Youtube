@@ -36,6 +36,20 @@ public class Search {
 			System.err.println("Error: error reading " + PROPERTIES_FILENAME
 					+ ": " + e.getMessage());
 		}
+		/*
+		try {
+			FindRandom();
+		} catch (GoogleJsonResponseException e) {
+			System.err.println("There was a service error: "
+					+ e.getDetails().getCode() + " : "
+					+ e.getDetails().getMessage());
+		} catch (IOException e) {
+			System.err.println("There was an IO error: " + e.getCause() + " : "
+					+ e.getMessage());
+		} catch (Throwable t) {
+			t.printStackTrace();
+		}
+		*/
 	}
 
 	public void FindRandom() throws GoogleJsonResponseException, IOException,

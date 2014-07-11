@@ -1,12 +1,13 @@
 import java.io.IOException;
 
 import javax.servlet.ServletException;
-import javax.servlet.http.*;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 import org.eclipse.jetty.server.Server;
-import org.eclipse.jetty.servlet.*;
-
-import com.google.api.client.googleapis.json.GoogleJsonResponseException;
+import org.eclipse.jetty.servlet.ServletContextHandler;
+import org.eclipse.jetty.servlet.ServletHolder;
 
 public class Runner extends HttpServlet {
 
@@ -17,18 +18,6 @@ public class Runner extends HttpServlet {
 			throws ServletException, IOException {
 		resp.getWriter().print("Hello from Java!\n");
 		Search search = new Search();
-		try {
-			search.FindRandom();
-		} catch (GoogleJsonResponseException e) {
-			System.err.println("There was a service error: "
-					+ e.getDetails().getCode() + " : "
-					+ e.getDetails().getMessage());
-		} catch (IOException e) {
-			System.err.println("There was an IO error: " + e.getCause() + " : "
-					+ e.getMessage());
-		} catch (Throwable t) {
-			t.printStackTrace();
-		}
 	}
 
 	public static void main(String[] args) throws Exception {
